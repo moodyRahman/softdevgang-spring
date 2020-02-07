@@ -33,16 +33,18 @@ var draw = function (e, state){
 	var rect = canvas.getBoundingClientRect();
 	const x = e.clientX - rect.left;
 	const y = e.clientY - rect.top;
-
-	if (state === "circle"){
-		ctx.beginPath();
-		ctx.arc(x, y, 5, 0, 2 * Math.PI);
-		ctx.stroke();
-	}
-	else {
-		ctx.beginPath();
-		ctx.rect(x, y, 8, 8);
-		ctx.stroke();
+	console.log(e);
+	if (e.buttons > 0){
+		if (state === "circle"){
+	                ctx.beginPath();
+	                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+	                ctx.stroke();
+	        }
+	        else {
+	                ctx.beginPath();
+	                ctx.rect(x, y, 8, 8);
+			ctx.stroke();
+		}
 	}
 };
 

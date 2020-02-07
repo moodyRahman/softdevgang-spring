@@ -31,10 +31,10 @@ var clearcanvas = function(canvas, contex){
 
 var draw = function (e, state){
 	var rect = canvas.getBoundingClientRect();
-	const x = e.clientX - rect.left;
+	const x = e.clientX - rect.left; // offsets the xy
 	const y = e.clientY - rect.top;
 	console.log(e);
-	if (e.buttons > 0){
+	if (e.buttons > 0){             // if the mouse button is down
 		if (state === "circle"){
 	                ctx.beginPath();
 	                ctx.arc(x, y, 5, 0, 2 * Math.PI);
@@ -49,7 +49,7 @@ var draw = function (e, state){
 };
 
 
-
+// adding all the listeners
 button.addEventListener("click", toggle);
 clear.addEventListener("click", function(){ctx.clearRect(0, 0, canvas.width, canvas.height);});
 canvas.addEventListener("mousemove", function(e, state){draw(e, curr_state)});

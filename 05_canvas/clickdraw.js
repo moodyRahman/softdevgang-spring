@@ -33,7 +33,6 @@ var draw = function (e, state){
 	var rect = canvas.getBoundingClientRect();
 	const x = e.clientX - rect.left; // offsets the xy
 	const y = e.clientY - rect.top;
-	console.log(e);
 	if (e.buttons > 0){             // if the mouse button is down
 		if (state === "circle"){
 	                ctx.beginPath();

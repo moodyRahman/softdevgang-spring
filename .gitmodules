@@ -1,0 +1,3 @@
+[submodule "softdevfall"]
+	path = softdevfall
+	url = https://github.com/moodyRahman/moodysoftdevgang.git

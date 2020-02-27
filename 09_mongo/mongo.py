@@ -1,4 +1,5 @@
-
+import json
+import sys
 from pymongo import MongoClient
 
 
@@ -11,9 +12,15 @@ collection = db["restaurant"]
 
 insert = {"name":"mood", "info":{"zip":345345, "rating":5}}
 
-collection.insert_one(insert)
+# collection.insert_one(insert)
 
 
+f = open("primer-dataset.json", "r")
 
-
-print(type(db))
+def db_populate():
+    for line in f:
+        # print(type(line))
+        l = line.replace("$date", "date")
+        # we can process file line by line here, for simplicity I am taking count of lines
+        j = json.loads(l)
+        collection.insert_one(j)

@@ -1,0 +1,5 @@
+
+{"address": {"building": "469", "coord": [-73.961704, 40.662942], "street": "Flatbush Avenue", "zipcode": "11225"},
+ "borough": "Brooklyn", "cuisine": "Hamburgers",
+ "grades": [{"date": {"$date": 1419897600000}, "grade": "A", "score": 8}, {"date": {"$date": 1404172800000}, "grade": "B", "score": 23}, {"date": {"$date": 1367280000000}, "grade": "A", "score": 12}, {"date": {"$date": 1336435200000}, "grade": "A", "score": 12}],
+ "name": "Wendy'S", "restaurant_id": "30112340"}

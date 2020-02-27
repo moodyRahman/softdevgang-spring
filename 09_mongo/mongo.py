@@ -46,6 +46,31 @@ def query_zip(zip):
         out.append(x)
     return out
 
+def query_zip_grade(zip, grade):
+    query = {"address.zipcode":zip}
 
-z = query_zip("11423")
-print(len(z))
+    result = collection.find(query)
+    out = []
+
+    for restaurant in result:
+        print(restaurant["name"])
+        # print(type(x["grades"]))
+        # print(x["grades"])
+        for singlegrade in restaurant["grades"]:
+            bad = False
+            # print(singlegrade["grade"])
+            if (not (singlegrade["grade"] == "Not Yet Graded") and ord(singlegrade["grade"]) <= ord(grade)):
+                pass
+            else:
+                bad = True
+        if (not bad):
+            out.append(restaurant)
+
+        print("\n")
+        print("\n")
+        # quit()
+        return out
+
+
+
+out = query_zip_grade("11423", "A")

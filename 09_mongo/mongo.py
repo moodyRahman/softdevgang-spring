@@ -24,3 +24,28 @@ def db_populate():
         # we can process file line by line here, for simplicity I am taking count of lines
         j = json.loads(l)
         collection.insert_one(j)
+
+def query_borough(borough):
+    query = {"borough":borough}
+
+    result = collection.find(query)
+
+    out = []
+    for x in result:
+        out.append(x)
+    return out
+
+
+def query_zip(zip):
+    query = {"address.zipcode":zip}
+
+    result = collection.find(query)
+
+    out = []
+    for x in result:
+        out.append(x)
+    return out
+
+
+z = query_zip("11423")
+print(len(z))

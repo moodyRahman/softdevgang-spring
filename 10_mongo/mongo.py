@@ -29,7 +29,13 @@ def query_title(title):
         out.append(movie)
     return out
 
+def query_actor(name):
+    query = {"cast":{"$regex":name, "$options": "i"}}
 
+    result = collection.find(query)
 
-
-d = query_title("ood")
+    out = []
+    for actor in result:
+        # print(movie)
+        out.append(movie)
+    return out

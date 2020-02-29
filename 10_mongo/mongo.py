@@ -73,6 +73,7 @@ class Query(object):
 
     
     def genre(self, gen):
+
         """Specify a genre to search the database by
 
         Parameters
@@ -86,10 +87,13 @@ class Query(object):
             this instance of Query
 
         """
+
         self.query["$and"].append({"genres":{"$regex":gen, "$options": "i"}})
         return self
 
+
     def title(self, name):
+
         """Specify a title to search the database by
 
         Parameters
@@ -103,10 +107,13 @@ class Query(object):
             this instance of Query.
 
         """
+
         self.query["$and"].append({"title":{"$regex":name, "$options": "i"}})
         return self
 
+
     def actor(self, name):
+
         """Specify an actor to search the database by
 
         Parameters
@@ -120,10 +127,13 @@ class Query(object):
             this instance of Query
 
         """
+
         self.query["$and"].append({"cast":{"$regex":name, "$options": "i"}})
         return self
 
+
     def beforeyear(self, before):
+    
         """Specify what year after to search the database by
 
         Parameters
@@ -141,7 +151,9 @@ class Query(object):
         self.query["$and"].append({"year":{"$lte":before}})
         return self
 
+
     def afteryear(self, after):
+        
         """Specify what year after to search the database by.
 
         Parameters
@@ -155,11 +167,13 @@ class Query(object):
             this instance of Query
 
         """
+        
         self.query["$and"].append({"year":{"$gte":after}})
         return self
 
 
     def execute(self):
+        
         """Execute the query and set query_out to the results
 
         Returns
@@ -168,6 +182,7 @@ class Query(object):
             list containing a deep copy of query_out
 
         """
+        
         out = []
         result = collection.find(self.query)
         for x in result:
@@ -175,7 +190,9 @@ class Query(object):
         self.query_out = out[:]      # store a copy of the array
         return out
 
+
     def pretty_print(self, limit=2147483647, order=1, count=False):
+        
         """Print the results of a query formatted.
 
         Parameters
@@ -187,6 +204,7 @@ class Query(object):
         count : boolean
             Head the results with the number of total results
         """
+        
         if count:
             print(str(len(self.query_out)) + " results found")    
         for n, x in enumerate(self.query_out[::order]):

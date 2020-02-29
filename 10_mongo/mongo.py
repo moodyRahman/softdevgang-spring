@@ -1,6 +1,8 @@
-
+# Moody Rahman, Sophie Nichol, Jude Rizzo
+# SoftDev pd 9
+# K10 -- Import/Export Bank
+# 2020-02-29
 '''
-    
     name of dataset and description of its contents
     hyperlink to where raw data is hosted
     brief summary of your import mechanism

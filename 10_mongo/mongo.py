@@ -28,18 +28,23 @@ class Query(object):
 
     def genre(self, g):
         self.query["genre"] = {"$regex":g, "$options": "i"}
+        return self
 
     def title(self, g):
         self.query["title"] = {"$regex":g, "$options": "i"}
+        return self
 
     def actor(self, g):
         self.query["actor"] = {"$regex":g, "$options": "i"}
+        return self
 
     def beforeyear(self, g):
         self.query["year"] = {"$lte":g}
+        return self
 
     def afteryear(self, g):
         self.query["year"] = {"$gte":g}
+        return self
 
 
     def execute(self):
@@ -109,7 +114,7 @@ def query_genre(genre):
 
 q = Query()
 
-
+q.afteryear(1900).genre("drama")
 print(q.query)
 # d = q.execute()
 

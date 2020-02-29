@@ -20,30 +20,31 @@ if m_count == 0:
 
 
 class Query(object):
-    """docstring for Query."""
+    """Store a query for execution"""
 
     def __init__(self):
         super(Query, self).__init__()
-        self.query = {}
+        self.query = {"$and":[]}
+        self.query_out = []
 
     def genre(self, g):
-        self.query["genre"] = {"$regex":g, "$options": "i"}
+        self.query["$and"].append({"genre":{"$regex":g, "$options": "i"}})
         return self
 
     def title(self, g):
-        self.query["title"] = {"$regex":g, "$options": "i"}
+        self.query["$and"].append({"title":{"$regex":g, "$options": "i"}})
         return self
 
     def actor(self, g):
-        self.query["cast"] = {"$regex":g, "$options": "i"}
+        self.query["$and"].append({"cast":{"$regex":g, "$options": "i"}})
         return self
 
     def beforeyear(self, g):
-        self.query["year"] = {"$lte":g}
+        self.query["$and"].append({"year":{"$lte":g}})
         return self
 
     def afteryear(self, g):
-        self.query["year"] = {"$gte":g}
+        self.query["$and"].append({"year":{"$gte":g}})
         return self
 
 
@@ -52,72 +53,23 @@ class Query(object):
         result = collection.find(self.query)
         for x in result:
             out.append(x)
+        self.query_out = out[:]
         return out
 
-
-def query_title(title):
-    query = {"title":{"$regex":title, "$options": "i"}}
-
-    result = collection.find(query)
-
-    out = []
-    for movie in result:
-        # print(movie)
-        out.append(movie)
-    return out
-
-def query_actor(name):
-    query = {"cast":{"$regex":name, "$options": "i"}}
-    print(query)
-
-    result = collection.find(query)
-
-    out = []
-    for actor in result:
-        # print(movie)
-        out.append(actor)
-    return out
-
-
-def query_after_year(year):
-    query = {"year":{"$gte":year}}
-
-    result = collection.find(query)
-
-    out = []
-    for year in result:
-        # print(movie)
-        out.append(year)
-    return out
-
-def query_before_year(year):
-    query = {"year":{"$lte":year}}
-
-    result = collection.find(query)
-
-    out = []
-    for year in result:
-        # print(movie)
-        out.append(year)
-    return out
-
-def query_genre(genre):
-    query = {"genres":{"$regex":genre, "$options": "i"}}
-
-    result = collection.find(query)
-
-    out = []
-    for g in result:
-        # print(movie)
-        out.append(g)
-    return out
+    def pretty_print(self):
+        return self.query.copy()
 
 
 q = Query()
 
-q.actor("brian").afteryear(2010)
-print(q.query)
+q.actor("michael").afteryear(1999).beforeyear(2001)
+print(q.pretty_print())
 d = q.execute()
+#
+g = q.query_out
 
-for x in d:
-    print(x)
+print(d)
+print("\n\n\n\n\n")
+print(g)
+
+print(len(d))

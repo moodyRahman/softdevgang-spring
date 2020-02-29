@@ -18,7 +18,13 @@
     
 
     the query object was meant to facillitate query's with multiple parameters 
-    multiple query calls 
+    multiple query calls can be formatted as 
+    q = Query() 
+    q.actor("mood").afteryear(2002)
+    --or--
+    q = Query()
+    q.actor("mood")
+    q.afteryear(2002)
 
 '''
 

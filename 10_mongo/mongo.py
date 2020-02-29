@@ -65,14 +65,9 @@ class Query(object):
         self.query_out = out[:]      # store a copy of the array
         return out
 
-    def pretty_print(self):
-        for x in self.query_out:
-            print(x)
+    def pretty_print(self, limit=2147483647, order=1):
+        print(str(len(self.query_out)) + " results found")
+        for n, x in enumerate(self.query_out[::order]):
+            if n < limit:
+                print(x)
 
-
-q = Query()
-
-q.actor("michael").afteryear(1999).beforeyear(2001)
-q.execute()
-
-q.pretty_print()

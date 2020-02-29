@@ -86,7 +86,7 @@ class Query(object):
             this instance of Query
 
         """
-        self.query["$and"].append({"genre":{"$regex":gen, "$options": "i"}})
+        self.query["$and"].append({"genres":{"$regex":gen, "$options": "i"}})
         return self
 
     def title(self, name):

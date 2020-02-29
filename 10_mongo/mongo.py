@@ -41,5 +41,28 @@ def query_actor(name):
     return out
 
 
-out = query_actor("cole")
-print(out[0])
+def query_after_year(year):
+    query = {"year":{"$gte":year}}
+
+    result = collection.find(query)
+
+    out = []
+    for year in result:
+        # print(movie)
+        out.append(year)
+    return out
+
+def query_before_year(year):
+    query = {"year":{"$lte":year}}
+
+    result = collection.find(query)
+
+    out = []
+    for year in result:
+        # print(movie)
+        out.append(year)
+    return out
+
+
+out = query_before_year(1901)
+print(out)

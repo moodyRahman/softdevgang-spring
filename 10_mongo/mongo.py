@@ -24,7 +24,7 @@ class Query(object):
 
     def __init__(self):
         super(Query, self).__init__()
-        self.query = {"year":[]}
+        self.query = {}
 
     def genre(self, g):
         self.query["genre"] = {"$regex":g, "$options": "i"}
@@ -35,7 +35,7 @@ class Query(object):
         return self
 
     def actor(self, g):
-        self.query["actor"] = {"$regex":g, "$options": "i"}
+        self.query["cast"] = {"$regex":g, "$options": "i"}
         return self
 
     def beforeyear(self, g):
@@ -68,6 +68,7 @@ def query_title(title):
 
 def query_actor(name):
     query = {"cast":{"$regex":name, "$options": "i"}}
+    print(query)
 
     result = collection.find(query)
 
@@ -114,8 +115,9 @@ def query_genre(genre):
 
 q = Query()
 
-q.afteryear(1900).genre("drama")
+q.actor("brian").afteryear(2010)
 print(q.query)
-# d = q.execute()
+d = q.execute()
 
-# print(d)
+for x in d:
+    print(x)

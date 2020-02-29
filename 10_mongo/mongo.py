@@ -20,7 +20,16 @@ if m_count == 0:
 
 
 class Query(object):
-    """Store a query for execution"""
+    """Create a query to be executed
+
+    Attributes
+    ----------
+    query : dict
+        inner query dictionary
+    query_out : list
+        stores the out of an execute()
+
+    """
 
     def __init__(self):
         super(Query, self).__init__()
@@ -53,23 +62,17 @@ class Query(object):
         result = collection.find(self.query)
         for x in result:
             out.append(x)
-        self.query_out = out[:]
+        self.query_out = out[:]      # store a copy of the array
         return out
 
     def pretty_print(self):
-        return self.query.copy()
+        for x in self.query_out:
+            print(x)
 
 
 q = Query()
 
 q.actor("michael").afteryear(1999).beforeyear(2001)
-print(q.pretty_print())
-d = q.execute()
-#
-g = q.query_out
+q.execute()
 
-print(d)
-print("\n\n\n\n\n")
-print(g)
-
-print(len(d))
+q.pretty_print()

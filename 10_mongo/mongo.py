@@ -1,3 +1,29 @@
+
+'''
+    
+    name of dataset and description of its contents
+    hyperlink to where raw data is hosted
+    brief summary of your import mechanism
+    
+    movies scraped from wikipedia
+    https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json
+    
+    
+    import mechanism
+    
+    this is done with code that is garunteed to run as either an import or when directly executed
+    it establishes a connection to mongod and switches to the "movies" collection in the "test" db
+    it then counts how many documents there are in "movies" and if it's zero, parse the movies.json and insert each element
+    if there are documents inside "movies" then it will do nothing
+    
+
+    the query object was meant to facillitate query's with multiple parameters 
+    multiple query calls 
+
+'''
+
+
+
 from pymongo import MongoClient
 import json
 
@@ -32,32 +58,108 @@ class Query(object):
     """
 
     def __init__(self):
+        """ Initialize a query """
         super(Query, self).__init__()
         self.query = {"$and":[]}
         self.query_out = []
 
-    def genre(self, g):
-        self.query["$and"].append({"genre":{"$regex":g, "$options": "i"}})
+    
+    def genre(self, gen):
+        """Specify a genre to search the database by
+
+        Parameters
+        ----------
+        gen : String
+            Name of genre to query by
+
+        Returns
+        -------
+        Query
+            this instance of Query
+
+        """
+        self.query["$and"].append({"genre":{"$regex":gen, "$options": "i"}})
         return self
 
-    def title(self, g):
-        self.query["$and"].append({"title":{"$regex":g, "$options": "i"}})
+    def title(self, name):
+        """Specify a title to search the database by
+
+        Parameters
+        ----------
+        name : type
+            Name of movie to query for.
+
+        Returns
+        -------
+        Query
+            this instance of Query.
+
+        """
+        self.query["$and"].append({"title":{"$regex":name, "$options": "i"}})
         return self
 
-    def actor(self, g):
-        self.query["$and"].append({"cast":{"$regex":g, "$options": "i"}})
+    def actor(self, name):
+        """Specify an actor to search the database by
+
+        Parameters
+        ----------
+        name : String
+            name of actor to query for.
+
+        Returns
+        -------
+        Query
+            this instance of Query
+
+        """
+        self.query["$and"].append({"cast":{"$regex":name, "$options": "i"}})
         return self
 
-    def beforeyear(self, g):
-        self.query["$and"].append({"year":{"$lte":g}})
+    def beforeyear(self, before):
+        """Specify what year after to search the database by
+
+        Parameters
+        ----------
+        before : int
+            Which year the query should search before
+
+        Returns
+        -------
+        Query
+            this instance of Query
+
+        """
+        
+        self.query["$and"].append({"year":{"$lte":before}})
         return self
 
-    def afteryear(self, g):
-        self.query["$and"].append({"year":{"$gte":g}})
+    def afteryear(self, after):
+        """Specify what year after to search the database by.
+
+        Parameters
+        ----------
+        after : int
+            What year should the query search after
+
+        Returns
+        -------
+        Query
+            this instance of Query
+
+        """
+        self.query["$and"].append({"year":{"$gte":after}})
         return self
 
 
     def execute(self):
+        """Execute the query and set query_out to the results
+
+        Returns
+        -------
+        list
+            list containing a deep copy of query_out
+
+        """
         out = []
         result = collection.find(self.query)
         for x in result:
@@ -65,8 +167,20 @@ class Query(object):
         self.query_out = out[:]      # store a copy of the array
         return out
 
-    def pretty_print(self, limit=2147483647, order=1):
-        print(str(len(self.query_out)) + " results found")
+    def pretty_print(self, limit=2147483647, order=1, count=False):
+        """Print the results of a query formatted.
+
+        Parameters
+        ----------
+        limit : int
+            how many results to show
+        order : int, -1 or 1
+            Present results in forward to reverse order
+        count : boolean
+            Head the results with the number of total results
+        """
+        if count:
+            print(str(len(self.query_out)) + " results found")    
         for n, x in enumerate(self.query_out[::order]):
             if n < limit:
                 print(x)

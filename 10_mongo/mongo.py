@@ -37,5 +37,9 @@ def query_actor(name):
     out = []
     for actor in result:
         # print(movie)
-        out.append(movie)
+        out.append(actor)
     return out
+
+
+out = query_actor("cole")
+print(out[0])

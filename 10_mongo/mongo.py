@@ -18,6 +18,38 @@ if m_count == 0:
 
 # {"title":"The Thunderbolt","year":1912,"cast":["William Garwood","James Cruze","David Thompson"],"genres":["Drama"]},
 
+
+class Query(object):
+    """docstring for Query."""
+
+    def __init__(self):
+        super(Query, self).__init__()
+        self.query = {"year":[]}
+
+    def genre(self, g):
+        self.query["genre"] = {"$regex":g, "$options": "i"}
+
+    def title(self, g):
+        self.query["title"] = {"$regex":g, "$options": "i"}
+
+    def actor(self, g):
+        self.query["actor"] = {"$regex":g, "$options": "i"}
+
+    def beforeyear(self, g):
+        self.query["year"] = {"$lte":g}
+
+    def afteryear(self, g):
+        self.query["year"] = {"$gte":g}
+
+
+    def execute(self):
+        out = []
+        result = collection.find(self.query)
+        for x in result:
+            out.append(x)
+        return out
+
+
 def query_title(title):
     query = {"title":{"$regex":title, "$options": "i"}}
 
@@ -63,6 +95,22 @@ def query_before_year(year):
         out.append(year)
     return out
 
+def query_genre(genre):
+    query = {"genres":{"$regex":genre, "$options": "i"}}
 
-out = query_before_year(1901)
-print(out)
+    result = collection.find(query)
+
+    out = []
+    for g in result:
+        # print(movie)
+        out.append(g)
+    return out
+
+
+q = Query()
+
+
+print(q.query)
+# d = q.execute()
+
+# print(d)

@@ -1,5 +1,5 @@
-import mongo 
-from mongo import Query
+import mango 
+from mango import Query
 
 
 

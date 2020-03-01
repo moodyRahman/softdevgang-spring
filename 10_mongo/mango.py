@@ -133,7 +133,7 @@ class Query(object):
 
 
     def beforeyear(self, before):
-    
+        
         """Specify what year after to search the database by
 
         Parameters

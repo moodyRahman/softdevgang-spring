@@ -36,6 +36,8 @@ def movie_parse():
 def poke_parse():
         query = PokeQuery()
         query.queryviadictionary(request.args)
+        result = query.execute()
+        return render_template("poke.html", results = result)
 
 
 

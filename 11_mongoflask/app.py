@@ -1,17 +1,21 @@
-from flask import Flask\n
-from flask import render_template\n
-from flask import request\n
-from flask import session\n
-from flask import redirect\n
-from flask import flash\n
-from flask import url_for\n
-import urllib\n
-import json\n
-import random\n
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask import session
+from flask import redirect
+from flask import flash
+from flask import url_for
+import urllib
+import json
+import random
 import csv
 import sqlite3
 import os
 import random
+import moviemango
+import pokemango
+from moviemango import MovieQuery
+from pokemango import PokeQuery
 
 app = Flask(__name__)
 
@@ -19,6 +23,20 @@ app = Flask(__name__)
 def index():
         print(__name__)
         return render_template('root.html')
+
+@app.route('/movie')
+def movie_parse():
+        query = MovieQuery()
+        query.queryviadictionary(request.args)
+        print(query.query)
+        result = query.execute()
+        return render_template("movie.html", results = result)
+
+@app.route('/poke')
+def poke_parse():
+        query = PokeQuery()
+        query.queryviadictionary(request.args)
+
 
 
 if __name__ == '__main__':

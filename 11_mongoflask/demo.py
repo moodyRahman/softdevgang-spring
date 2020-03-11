@@ -1,12 +1,12 @@
-import mango 
-from mango import Query
+import moviemango 
+from moviemango import MovieQuery
 
 
 
 
 
 
-q = Query()
+q = MovieQuery()
 
 q.actor("michael").genre("drama")
 

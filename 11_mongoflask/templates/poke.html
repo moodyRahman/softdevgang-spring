@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='UTF-8'>
+	<title>title</title>
+	<link rel='stylesheet' href='stylesheet.css' type='text/css'>
+</head>
+
+<body>
+
+	<table>
+
+		<tr>
+                        <th>Name</th>
+                        <th>Num</th>
+			<th>Type</th>
+			<th>Height</th>
+                        <th>Weight</th>
+                        <th>Weaknesses</th>
+                        <th>evolution line</th>
+		</tr>
+
+
+
+
+		{% for poke in results %}
+		<tr>
+
+			<td> {{ poke.name}} </td>
+			<td> {{ poke.num}} </td>
+			<td> {{ poke.type}} </td>
+                        <td> {{ poke.height}} </td>
+                        <td> {{ poke.weight}} </td>
+			<td> {{ poke.weaknesses}} </td>
+			<td> {{ poke.next_evolution}} </td>
+			
+		</tr>
+		{% endfor %}
+
+
+	</table>
+
+	<script src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' type='text/javascript'></script>
+</body>
+
+</html>

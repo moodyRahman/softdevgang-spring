@@ -92,15 +92,15 @@ class PokeQuery(object):
 
 	def queryviadictionary(self, dictin):
 		for x in dictin.keys():
-		if dictin[x] != "":
-			if x == "before":
-				self.query["$and"].append({"year": {"$lte": int(dictin[x])}})
-				
-			elif x == "after":
-				self.query["$and"].append({"year": {"$gte": int(dictin[x])}})
-				
-			else:
-				self.query["$and"].append({x: {"$regex": dictin[x], "$options": "i"}})
+			if dictin[x] != "":
+				if x == "before":
+					self.query["$and"].append({"year": {"$lte": int(dictin[x])}})
+					
+				elif x == "after":
+					self.query["$and"].append({"year": {"$gte": int(dictin[x])}})
+					
+				else:
+					self.query["$and"].append({x: {"$regex": dictin[x], "$options": "i"}})
 
 
 	def execute(self):

@@ -1,5 +1,5 @@
-// Yevgeniy Gorbachev
-// SoftDev1 pd1
+// Yevgeniy Gorbachev and Moududur Rahman
+// SoftDev1 pd1/ pd9
 // K12 -- Connect the Dots
 // 2020-03-27
 
@@ -19,7 +19,6 @@ function dot(x, y) {
 };
 
 function draw(e) {
-	console.log(e);
 	let c = dot(e.offsetX, e.offsetY)
 	e.preventDefault()
 

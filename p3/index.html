@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>shell scripting</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+		@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap');
+
+		body {
+			font-family: 'Roboto Slab', serif;
+		}
+
+		p {
+			margin: 50px;
+			margin-bottom: 90px;
+			font-size: 1.1rem;
+		}
+
+		h2 {
+			margin: 30px;
+			margin-bottom: 50px;
+			font-size: 2rem;
+		}
+
+		h4 {
+			margin: 30px;
+			margin-bottom: 50px;
+			font-size: 2rem;
+		}
+
+		code {
+			background-color: #55e2dd;
+			font-family: 'Roboto Mono', monospace;
+			white-space: pre-line;
+		}
+
+		small_heading{
+			font-size: 1.5rem;
+		}
+
+
+
+
+	</style>
+</head>
+
+<body>
+
+	<span><center><h2>SHELL SCRIPTING<br>A MOODY RAHMAN TUTORIAL</h2></center></span>
+
+	<p>
+		<a href="#1">WHAT IS A SHELL</a> <br>
+		<a href="#2">WHAT IS A SHELL SCRIPT</a> <br>
+		<a href="#3">HOW DO WE WRITE A SHELL SCRIPT</a> <br>
+		<a href="#4">HOW TO EXECUTE THE SCRIPT</a> <br>
+		<a href="#5">FINISHING THE NEWFLASKAPP SCRIPT</a> <br>
+		<a href="#6">PARSE THE NEW CODE</a> <br>
+		<a href="#7">THE PATH VARIABLE</a> <br>
+		<a href="#8">RC FILES</a> <br>
+	</p>
+
+	<h2>WHAT IS A SHELL</h2>
+	<p id=1>
+		A shell is a program used to input commands to your computer. It allows you access to the terminal, the
+		most bare bone version of your computer possible. <br>
+		(Running your computer without a GUI is called a TTY session. On Ubuntu you can access it with
+		ctrl+f[3-12] ) <br>
+
+		Since we usually use our computers with a Graphical User Interface (GUI) running atop of them, we use
+		terminal emulators, to give us access to a non-GUI environment from within the GUI. <br> <br>
+
+		From the shell we can enter commands and parameters for our computers to parse and execute. <br><br>
+
+		There are several different shells availible, all of them with their own pro's and con's. <br>
+		The most commonly used shell is Bourne Again Shell (bash), that most operating systems come packaged
+		with. <br> <br>
+
+		Some other shells include sh, zsh, fish, csh and ksh. They are all unique and have their own quirks, so
+		it's important to read up on them before installation. <br>
+		I personally recommend trying out zsh, but this tutorial will use bash. <br><br>
+
+		THIS TUTORIAL YOU ALREADY ARE FAMILIAR WITH THE UNIX FILESYSTEM
+	</p>
+
+	<h2>WHAT IS A SHELL SCRIPT</h2>
+
+	<p id=2>
+		A shell script is a file that contains several commands to be run in successesion. <br>
+
+		This is incredibly useful to automate repetetive tasks <br><br>
+
+		Furthermore, bash offers ways to control the flow of your script, offering more flexibility in what you
+		can do. <br>
+		Gone are the days of hitting the up arrow key and then enter, or typing commands over and over again.
+		Write a shell script to do what you want to do, and let the magic happen.
+
+	</p>
+
+	<h2>HOW DO WE WRITE A SHELL SCRIPT?</h2>
+
+	<p id=3>
+		First let's make a new file, name it whatever you want. <br>
+		Note: that the name of this file will be what you type in as a command to execute the file later. <br>
+		For this example, let's make a file called <code>newflaskapp</code> and store it inside <code>~/bin</code><br><br>
+
+
+
+		All shell scripts must start with the same line <br> <br>
+
+		<code class="indent">!# bin/bash</code> <br><br>
+
+		This special line, called a shebang. It tells your shell to execute the remainder of the file with whatever program is specificed in the shebang. <br>
+		Here we specified it to "go to the /bin directory and use the bash program to execute the remainder of this file"<br><br>
+
+		Now let's define a variable. <br><br>
+
+		<!-- <code class="indent">FLASKSTART="from flask import Flask</code> <br>
+		<code class="indent">app = Flask(__name__)</code> <br>
+		<code class="indent">@app.route('/')</code> <br>
+		<code class="indent">def index():</code> <br>
+		<code class="indent">&nbsp print(__name__)</code> <br>
+		<code class="indent">&nbsp return render_template('root.html')"</code> <br><br> -->
+		
+		<code>
+			FLASKSTART="from flask import Flask
+			&nbsp
+			app = Flask(__name__)
+			&nbsp
+			@app.route('/')
+			def index():
+				&nbsp print(__name__)
+				&nbsp return 'WE ARE UP' "
+		</code> <br><br>
+
+		NOTE: Variable definitions in bash is very finnicky, it has to be <code>variablename=variablecontent</code>, with no whitespace after or before the =.<br>
+		To when referring to a variable, we have to refer to it with a <code>$</code>, so to refer to the variable FLASKSTART, we use <code>$FLASKSTART</code> <br>
+		We use the command <code>echo</code> to print out a string or a variable. <br>
+		Variables can be inserted into a string, making for easy substitution (important for running commands with different parameters) <br>
+		<code>
+			name="mood"
+			echo "man, $name is awesome"
+		</code> <br>
+		bash will substiture <code>$name</code> with mood. <br><br>
+
+		We can put these three snippets together and our file should look like: <br>
+		<code>
+			!# bin/bash
+			FLASKSTART="from flask import Flask
+			&nbsp
+			app = Flask(__name__)
+			&nbsp
+			@app.route('/')
+			def index():
+				&nbsp print(__name__)
+				&nbsp return 'WE ARE UP' "
+			
+			echo "$FLASKSTART"
+		</code> <br>
+		note: running echo with quotes around what to print ensures that whitespace remains preserved. <br>
+	</p>
+
+
+	<h2 id=4>HOW TO EXECUTE THE SCRIPT</h2>
+	<p>
+		We need some way to tell our computer "this file is an executable, please treat it as such" <br>
+		We can do this with the <code>chmod</code> command. <br>
+		From the terminal, with the file saved and closed, run: <br>
+		<code>
+			chmod +x newflaskapp
+		</code> <br>
+
+		This grants us execution priveleges to the file and we can now execute it. <br> 
+		There are two ways to execute the file: <code>source</code> and <code>./</code>
+	</p>
+
+	<h4>source</h4>
+	<p>
+		<code>source newflaskapp</code> <br>
+		It's important to note that all variables are attached to the current instance of the terminal. <br>
+		When you close the terminal and open it again, all the created variables will be destroyed. <br>
+		Executing out file with source will give it access to all previously created files, and subsequent executables can access variables created by newflaskapp <br>
+	</p>
+
+	<h4>./</h4>
+	<p>
+		<code>./newflaskapp</code> <br>
+		Running our executable like this restricts some of the variables that our program has access to, and makes sure that subsequent new terminals do not have access to any variables <code>newflaskapp</code> creates. <br>
+		It's preferred to execute programs with this method. 
+	</p>
+
+	<h2>FINISHING THE NEWFLASKAPP SCRIPT</h2>
+	<p id=5>
+		Let's add some more lines to <code>newflaskapp</code> <br>
+		<code>
+			echo "$FLASKSTART" >> app.py
+			mkdir static
+			mkdir templates
+			
+			HTML=" &lt;!DOCTYPE html&gt;
+			&lt;html&gt;
+			  &lt;head&gt;
+			    &lt;meta charset=&quot;UTF-8&quot;&gt;
+			    &lt;title&gt;title&lt;/title&gt;
+			  &lt;/head&gt;
+			  &lt;body&gt;
+			  &lt;/body&gt;
+			&lt;/html&gt;
+			"
+			echo "$HTML" >> ./templates/index.html
+
+		</code>
+
+	</p>
+
+	<h2>LETS PARSE THE NEW CODE</h2>
+	<p id=6>
+
+		<code>echo "$FLASKSTART" >> app.py</code> <br>
+		Here we are using one of the features of bash, the redirection operator ( <code>></code> and <code>>></code> ) <br>
+		In essence, it takes the text output of what is on the left and writes it to whatever is on the right. <br>
+		We print out the contents of $FLASKSTART, but rather than printing it to the terminal, write it to the file app.py. <br>
+		<code>>></code> appends the new text at the end of the file while <code>></code> overwrites the file with the content. <br><br>
+
+		<code>
+			mkdir static
+			mkdir templates
+		</code>
+		Don't forget, any command you would use normally in your shell you can also use in a shell script. <br><br>
+
+		<code>
+			HTML=" &lt;!DOCTYPE html&gt;
+			&lt;html&gt;
+			  &lt;head&gt;
+			    &lt;meta charset=&quot;UTF-8&quot;&gt;
+			    &lt;title&gt;title&lt;/title&gt;
+			  &lt;/head&gt;
+			  &lt;body&gt;
+			  &lt;/body&gt;
+			&lt;/html&gt;
+			"
+			echo "$HTML" >> ./templates/index.html
+		</code>
+		Here, we define a new variable, call it $HTML, and output the contents of it to a new file called index.html in the templates folder. <br><br>
+
+		Note: when we're printing out the variable, we wrap it in quotation marks. This is to ensure that whitespace is maintained, essential for our code. <br>
+		Echo-ing the variable without the quotes will cause it to ignore whitespace. 
+	</p>
+
+	<h2>THE PATH VARIABLE</h2>
+	<p id=7>
+		Our newflaskapp script should look like this: <br>
+		<code>
+			!# bin/bash
+			FLASKSTART="from flask import Flask
+			&nbsp
+			app = Flask(__name__)
+			&nbsp
+			@app.route('/')
+			def index():
+				&nbsp print(__name__)
+				&nbsp return 'WE ARE UP' "
+			
+			echo "$FLASKSTART" >> app.py
+			mkdir static
+			mkdir templates
+			
+			HTML=" &lt;!DOCTYPE html&gt;
+			&lt;html&gt;
+			  &lt;head&gt;
+			    &lt;meta charset=&quot;UTF-8&quot;&gt;
+			    &lt;title&gt;title&lt;/title&gt;
+			  &lt;/head&gt;
+			  &lt;body&gt;
+			  &lt;/body&gt;
+			&lt;/html&gt;
+			"
+			echo "$HTML" >> ./templates/index.html
+		</code> <br><br>
+
+		The final question is: how can we run this script from anywhere in our computer like any other command? <br>
+		And the answer lies in the <code>$PATH</code> variable. <br><br>
+
+		Try opening a terminal emulator and run <code>echo $PATH</code> <br>
+		It should look something like <br>
+		<code>/home/moody/.nvm/versions/node/v13.11.0/bin:/home/moody/bin:/home/moody/.local/bin:/home/moody/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/moody/go/bin
+		</code> <br>
+		A colon sperated list of directories. These right here are where all the executable files that your commands refer to lie. <br>
+		When I type in the command <code>cat</code>, the shell goes through these directories and looks for the first instance of an executable file called cat. which is viewable at /usr/bin. <br>
+		You can cd into this directory and run <code>./cat ~/somefile.txt</code>, and it will work as expected. <br>
+		How can we add <code>~/bin</code> to our $PATH variable?
+	</p>
+
+	<h2>RC FILES</h2>
+
+	<p id=8>
+		Every shell has a rc file associated with it, often located in the home directory. Bash has <code>~/.bashrc</code>. <br>
+		Inside the .bashrc file, is a list of commands that will run automatically everytime you open a new terminal. <br>
+		You can add <code>neofetch</code> to your .bashrc and it'll print out some cool system information everytime you open your terminal! <br>
+		Or you can add <code>fortune | cowsay</code> for a silly cow. <br><br>
+
+		We're going to add <br>
+		<code>export PATH="$HOME/bin:$PATH"</code> <br>
+		to the file. <br><br>
+
+		Now ~/bin is in our $PATH, and we can simply type in <code>newflaskapp</code> from any directory, and it will execute the script we just wrote.
+	</p>
+
+
+
+
+</body>
+
+</html>
